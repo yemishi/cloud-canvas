@@ -1,6 +1,6 @@
 "use server"
-import { Icon } from "@/app/components/icon";
 import { parseToCelsius } from "@/utils";
+import Icon from "../components/icon/Icon";
 
 type AirInfoType = {
   feels_like: number;
