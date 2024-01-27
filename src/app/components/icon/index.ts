@@ -1,3 +1,3 @@
 import BubbleIcon from "./bubbleIcon";
-import Icon from "./icon";
+import Icon from "./Icon";
 export { BubbleIcon, Icon };

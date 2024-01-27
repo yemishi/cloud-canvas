@@ -1,6 +1,6 @@
 "use client";
 
-import LocationForm from "./LocationForm";
+import LocationForm from "./components/location/LocationForm";
 
 export default function Home() {
   return (

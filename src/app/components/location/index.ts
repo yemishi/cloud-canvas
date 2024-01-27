@@ -1,3 +1,3 @@
-import LocationForm from "../../LocationForm";
+import LocationForm from "./LocationForm";
 
 export { LocationForm };
