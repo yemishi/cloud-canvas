@@ -95,9 +95,7 @@ export default async function Page({
 
   return (
     <div
-      style={{
-        background: `url(./backgrounds/${icon.replace(/1[01]/, "09")}.jpg)`
-      }}
+   
       className={`!bg-cover !bg-center !bg-no-repeat min-h-full flex`}
     >
       <div className="w-full min-h-full pb-20 bg-black  bg-opacity-40 flex flex-col items-center gap-7 p-2 ">
