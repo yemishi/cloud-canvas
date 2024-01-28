@@ -1,4 +1,4 @@
-"use client"
+
 export default function Icon({
   children,
   title,
@@ -8,13 +8,12 @@ export default function Icon({
   title: string;
   description: string;
 }) {
+  console.log(  children,
+    title,
+    description)
   return (
     <div className="flex gap-1 items-center font-lato text-sm">
-      <span className="w-8 fill-white"> {children}</span>
-      <span className="flex flex-col">
-        <p className="text-gray-300">{title}</p>
-        <p >{description}</p>
-      </span>
+  server test
     </div>
   );
 }

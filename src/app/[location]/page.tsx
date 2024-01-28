@@ -1,5 +1,5 @@
 "use server";
-import BubbleIcon from "../components/icon/bubbleIcon";
+import BubbleIcon from "../components/bubbleIcon";
 import { WeatherIcon } from "@/types";
 import { parseLocalTime, parseToCelsius } from "@/utils/index";
 import AirInfo from "./airInfo";
