@@ -1,5 +1,5 @@
 "use server";
-import BubbleIcon from "../components/bubbleIcon";
+import BubbleIcon from "../components/icon/bubbleIcon";
 import { WeatherIcon } from "@/types";
 import { parseLocalTime, parseToCelsius } from "@/utils/index";
 import AirInfo from "./airInfo";
@@ -100,7 +100,6 @@ export default async function Page({
       className={`!bg-cover !bg-center !bg-no-repeat min-h-full flex`}
     >
       <div className="w-full min-h-full pb-20 bg-black  bg-opacity-40 flex flex-col items-center gap-7 p-2 ">
-        
         <span className="text-end font-thin self-end font-lato backdrop-blur">
           <p className="text-sm">Last update</p>
           <p className="text-lg">{parseLocalTime(dt + timezone)}</p>
@@ -174,7 +173,7 @@ export default async function Page({
             </svg>
           </BubbleIcon>
         </span>
-        
+
         <AirInfo {...airInfo} />
         <img
           src={`./icons/${icon}.svg`}
