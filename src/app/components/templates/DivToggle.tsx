@@ -33,7 +33,7 @@ export default function DivToggle({
 
       borderRadius: "50px"
     },
-    open: { translateX: 0, width: "100%", height: "100%", margin: 0 }
+    open: { translateX: 0, width: "100vw", height: "100vh", margin: 0 }
   };
   const handleDiv = () => {
     setState(!state), onChange && onChange();
@@ -44,11 +44,12 @@ export default function DivToggle({
       variants={variant}
       animate={state ? "open" : "close"}
       initial="initial"
+      transition={{duration:0.2}}
       onClick={handleDiv}
-      className={`fixed flex items-center justify-center 
+      className={`fixed flex items-center justify-center overflow-hidden
       backdrop-blur-md p-2 ${!state && (isLeft ? "left-5" : "right-5")}  ${
         !state
-          ? "bottom-5 border-2 hover:backdrop-brightness-200"
+          ? "bottom-5  hover:backdrop-brightness-200"
           : isLeft
           ? "bottom-0 left-0 z-20"
           : "bottom-0 right-0 z-20"

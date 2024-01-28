@@ -175,11 +175,8 @@ export default async function Page({
         </span>
 
         <AirInfo {...airInfo} />
-        <img
-          src={`./icons/${icon}.svg`}
-          className="w-64 rounded-full  backdrop-blur-sm"
-          alt="Current weather icon"
-        />
+
+
         <MultiInfo {...multiInfo} />
       </div>
     </div>
