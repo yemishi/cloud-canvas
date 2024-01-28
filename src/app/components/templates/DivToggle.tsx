@@ -30,7 +30,6 @@ export default function DivToggle({
       translateX: 0,
       width: "50px",
       height: "50px",
-
       borderRadius: "50px"
     },
     open: { translateX: 0, width: "100vw", height: "100vh", margin: 0 }
@@ -44,7 +43,7 @@ export default function DivToggle({
       variants={variant}
       animate={state ? "open" : "close"}
       initial="initial"
-      transition={{duration:0.2}}
+      transition={{duration:0.1}}
       onClick={handleDiv}
       className={`fixed flex items-center justify-center overflow-hidden
       backdrop-blur-md p-2 ${!state && (isLeft ? "left-5" : "right-5")}  ${
