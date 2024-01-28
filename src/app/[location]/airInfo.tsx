@@ -1,6 +1,5 @@
 "use server";
 import { parseToCelsius } from "@/utils";
-import Icon from "../components/icon/icon";
 
 type AirInfoType = {
   feels_like: number;
@@ -98,6 +97,7 @@ export default async function AirInfo(airInfo: AirInfoType) {
       </svg>
     )
   };
+
   const formattedInfo = (element: string, value: number): string => {
     switch (element) {
       case "deg":
@@ -158,6 +158,7 @@ export default async function AirInfo(airInfo: AirInfoType) {
         </svg>
         <p>Air Quality</p>
       </span>
+
       <div className="grid gap-x-7 gap-y-4 p-2 grid-cols-3 w-full">
         {Object.keys(airInfo).length > 0 &&
           airInfo &&
@@ -165,13 +166,16 @@ export default async function AirInfo(airInfo: AirInfoType) {
             const title: keyof AirInfoType = key as keyof AirInfoType;
             const element = airInfo[title];
             return (
-              <Icon
+              <div
                 key={`${key}_${index}`}
-                title={title.replace("_", " ")}
-                description={element ? formattedInfo(title, element) : "???"}
+                className="flex gap-1 items-center font-lato text-sm"
               >
-                {iconsBundle[title]}
-              </Icon>
+                <span className="w-8 fill-white"> {iconsBundle[title]}</span>
+                <span className="flex flex-col">
+                  <p className="text-gray-300">{title}</p>
+                  <p>{element ? formattedInfo(title, element) : "???"}</p>
+                </span>
+              </div>
             );
           })}
       </div>

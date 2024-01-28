@@ -57,6 +57,7 @@ export default async function Page({
 }) {
   const { location } = params;
   const data = await getData(location);
+  console.log(data)
 
   if (data.cod !== 200) return <div>Not found</div>;
   const { main, name, weather, wind, sys, dt, clouds, timezone } = data;
