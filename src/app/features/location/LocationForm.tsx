@@ -42,7 +42,7 @@ export default function LocationForm() {
         name="location"
         value={location}
         className="bg-gray-900 bg-opacity-20 hover:bg-opacity-40 focus:bg-opacity-30 duration-200 hover:bg-black outline-none  self-center p-2  
-        rounded-xl border border-gray-700 pl-3 w-full"
+        rounded-xl border border-gray-700 pl-3 w-56"
         onChange={(e) => setLocation(e.target.value)}
       />
 
