@@ -1,17 +1,21 @@
 "use client";
+import { LoadingPage } from "@/app/pages";
 import { navigate } from "@/app/redirect";
 import { useState } from "react";
 
 export default function LocationForm() {
   const [location, setLocation] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>();
 
   const getLocation = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
       const locationName = await getLocationName(latitude, longitude);
       setLocation(locationName);
+      setLoading(false);
     });
 
     const getLocationName = async (
@@ -24,14 +28,15 @@ export default function LocationForm() {
         );
         const data = await response.json();
         if (data) {
+          setError(false);
           return data.address.hamlet;
         } else {
-          console.error("Não foi possível obter o nome da localização.");
+          setError(true);
           return "Unknown location";
         }
       } catch (error) {
-        console.error("Erro na requisição de geocodificação reversa:");
-        return "Invalid Location";
+        setError(true);
+        return "Unknown location";
       }
     };
   };
@@ -41,8 +46,13 @@ export default function LocationForm() {
       onSubmit={(e) => {
         e.preventDefault(), navigate(location);
       }}
-      className="flex flex-col items-center gap-7 justify-between  font-poppins  h-full"
+      className="flex flex-col items-center gap-5 justify-between font-poppins h-full"
     >
+      {error && (
+        <p className="text-red-400 font-merriWeather font-semibold">
+          Unknown location
+        </p>
+      )}
       <input
         type="text"
         name="location"
@@ -52,7 +62,7 @@ export default function LocationForm() {
         onChange={(e) => setLocation(e.target.value)}
       />
 
-      <span className="font-semibold flex flex-col gap-6">
+      <span className="font-semibold flex flex-col gap-6 items-center">
         <p>or</p>
         <span
           className="py-2 px-5  cursor-pointer bg-gray-900 hover:bg-opacity-30  duration-200 bg-opacity-20  border border-gray-700 rounded-full"
@@ -63,10 +73,16 @@ export default function LocationForm() {
       </span>
       <button
         type="submit"
-        className={`text-lg   duration-200 ${location ? "text-green-500" : ""}`}
+        onClick={()=> setLoading(true)}
+        className={`text-lg duration-200 ${location ? "text-green-500" : ""}`}
       >
         See weather
       </button>
+      {loading && (
+        <div className="absolute h-screen w-screen top-0 left-0">
+          <LoadingPage />
+        </div>
+      )}
     </form>
   );
 }

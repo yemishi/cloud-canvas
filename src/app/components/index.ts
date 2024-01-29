@@ -1,4 +1,3 @@
-import { PreferencesPanel } from "./preferences";
 import { DivToggle } from "./templates";
-import { LocationForm } from "./location";
-export { LocationForm, DivToggle, PreferencesPanel };
+import { BubbleIcon } from "./icon";
+export { DivToggle,BubbleIcon };

@@ -1,6 +1,7 @@
 "use client";
 
-import { DivToggle, LocationForm, PreferencesPanel } from "@/app/components";
+import { DivToggle } from "../components";
+import { LocationForm, PreferencesPanel } from "@/app/features";
 import MultiInfoModel from "@/models/multiInfo";
 import { MultiInfoProps } from "@/types";
 import { parseLocalTime } from "@/utils";

@@ -1,4 +1,5 @@
+import { LoadingPage } from "./pages"
 
 export default function Loading(){
-    return <div className="w-full h-full bg-black">Loading...</div>
+    return <LoadingPage/>
 }

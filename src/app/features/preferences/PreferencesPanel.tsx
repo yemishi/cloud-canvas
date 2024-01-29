@@ -3,7 +3,7 @@ import MultiInfoModel from "@/models/multiInfo";
 import { MultiInfoProps } from "@/types";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { DivToggle } from "..";
+import { DivToggle } from "../../components";
 
 type PropsType = {
   publicProperties: MultiInfoProps;

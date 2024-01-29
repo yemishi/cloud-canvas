@@ -1,9 +1,10 @@
 "use server";
-import BubbleIcon from "../components/icon/bubbleIcon";
+import { BubbleIcon } from "../components";
 import { WeatherIcon } from "@/types";
 import { parseLocalTime, parseToCelsius } from "@/utils/index";
 import AirInfo from "./airInfo";
 import MultiInfo from "./multiInfo";
+import { NotFoundLocation } from "../pages";
 
 type WeatherType = {
   name: string;
@@ -58,7 +59,7 @@ export default async function Page({
   const { location } = params;
   const data = await getData(location);
 
-  if (data.cod !== 200) return <div>Not found</div>;
+  if (data.cod !== 200) return <NotFoundLocation />;
   const { main, name, weather, wind, sys, dt, clouds, timezone } = data;
 
   const { icon, description } = weather[0];
@@ -77,11 +78,11 @@ export default async function Page({
 
   const airInfo = {
     speed,
-    gust: gust || 0,
+    gust: gust,
     deg,
     humidity,
     feels_like,
-    sea_level: sea_level || 0
+    sea_level: sea_level
   };
 
   const multiInfo = {
@@ -102,7 +103,9 @@ export default async function Page({
       <div className="w-full min-h-full pb-20 bg-black  bg-opacity-40 flex flex-col items-center gap-7 p-2 ">
         <span className="text-end font-thin self-end font-lato backdrop-blur">
           <p className="text-sm">Last update</p>
-          <p className="text-lg">{parseLocalTime(dt + timezone)}</p>
+          <p className="text-base font-medium">
+            {parseLocalTime(dt + timezone)}
+          </p>
         </span>
 
         <span className="flex w-full justify-between px-3 mb-4 items-start">
@@ -131,13 +134,10 @@ export default async function Page({
             </svg>
           </BubbleIcon>
 
-          <span
-            className="flex p-4 rounded-3xl    backdrop-blur  flex-col text-center font-montserrat gap-2
-            "
-          >
+          <span className="flex p-4 rounded-3xl backdrop-blur flex-col text-center font-montserrat gap-2">
             <p className="text-white">{description}</p>
 
-            <h1 className="text-7xl after:content-['°C']  after:font-semibold after:absolute after:text-xl">
+            <h1 className="text-7xl after:content-['°C'] after:font-semibold after:absolute after:text-xl">
               {parseToCelsius(temp)}
             </h1>
 
@@ -175,8 +175,11 @@ export default async function Page({
         </span>
 
         <AirInfo {...airInfo} />
-
-
+        <img
+          className="w-40 rounded-full backdrop-blur-sm"
+          src={`./icons/${icon}.svg`}
+          alt=""
+        />
         <MultiInfo {...multiInfo} />
       </div>
     </div>
