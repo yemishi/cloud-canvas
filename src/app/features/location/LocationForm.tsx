@@ -2,43 +2,32 @@
 import { LoadingPage } from "@/app/pages";
 import { navigate } from "@/app/redirect";
 import { useState } from "react";
+import { getLocationName } from "./actions";
 
 export default function LocationForm() {
   const [location, setLocation] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>();
+  const [error, setError] = useState<string>("");
 
   const getLocation = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      if (result.state === "denied") {
+        setError(
+          "Permission to use location denied, please change in settings."
+        );
+        return setLoading(false);
+      }
+    });
+
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
-      const locationName = await getLocationName(latitude, longitude);
+      const locationName = await getLocationName(latitude, longitude, setError);
       setLocation(locationName);
       setLoading(false);
     });
-
-    const getLocationName = async (
-      lat: number,
-      lon: number
-    ): Promise<string> => {
-      try {
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`
-        );
-        const data = await response.json();
-        if (data) {
-          setError(false);
-          return data.address.hamlet;
-        } else {
-          setError(true);
-          return "Unknown location";
-        }
-      } catch (error) {
-        setError(true);
-        return "Unknown location";
-      }
-    };
   };
 
   return (
@@ -48,11 +37,6 @@ export default function LocationForm() {
       }}
       className="flex flex-col items-center gap-5 justify-between font-poppins h-full"
     >
-      {error && (
-        <p className="text-red-400 font-merriWeather font-semibold">
-          Unknown location
-        </p>
-      )}
       <input
         type="text"
         name="location"
@@ -64,6 +48,11 @@ export default function LocationForm() {
 
       <span className="font-semibold flex flex-col gap-6 items-center">
         <p>or</p>
+        {error && (
+          <p className="text-red-400 font-merriWeather font-semibold">
+            {error}
+          </p>
+        )}
         <span
           className="py-2 px-5  cursor-pointer bg-gray-900 hover:bg-opacity-30  duration-200 bg-opacity-20  border border-gray-700 rounded-full"
           onClick={getLocation}
@@ -79,7 +68,7 @@ export default function LocationForm() {
         See weather
       </button>
       {loading && (
-        <div className="absolute h-screen w-screen top-0 left-0">
+        <div className="absolute h-full w-full top-0  left-0">
           <LoadingPage />
         </div>
       )}
