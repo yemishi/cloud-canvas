@@ -102,7 +102,6 @@ export default async function Page({
     >
       <div className="w-full min-h-full pb-20 bg-black  bg-opacity-40 flex flex-col items-center gap-7 p-2 ">
         <span className="text-end font-thin self-end font-lato backdrop-blur">
-          <p className="text-sm">Last update</p>
           <p className="text-base font-medium">
             {parseLocalTime(dt + timezone)}
           </p>
