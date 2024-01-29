@@ -35,14 +35,14 @@ export default function LocationForm() {
       onSubmit={(e) => {
         e.preventDefault(), navigate(location);
       }}
-      className="flex flex-col items-center gap-5 justify-between font-poppins h-full"
+      className="flex flex-col items-center gap-5 justify-between font-poppins h-full self-center w-full p-2"
     >
       <input
         type="text"
         name="location"
         value={location}
-        className="bg-gray-900 bg-opacity-20 hover:bg-opacity-40 focus:bg-opacity-30 duration-200 hover:bg-black outline-none  self-center p-2 
-        rounded-xl border border-gray-700 pl-3"
+        className="bg-gray-900 bg-opacity-20 hover:bg-opacity-40 focus:bg-opacity-30 duration-200 hover:bg-black outline-none  self-center p-2  
+        rounded-xl border border-gray-700 pl-3 w-full"
         onChange={(e) => setLocation(e.target.value)}
       />
 
