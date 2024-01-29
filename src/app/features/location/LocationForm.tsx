@@ -73,7 +73,7 @@ export default function LocationForm() {
       </span>
       <button
         type="submit"
-        onClick={()=> setLoading(true)}
+        onClick={() => location && setLoading(true)}
         className={`text-lg duration-200 ${location ? "text-green-500" : ""}`}
       >
         See weather
