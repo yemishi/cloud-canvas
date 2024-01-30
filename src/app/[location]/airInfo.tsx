@@ -172,7 +172,7 @@ export default async function AirInfo(airInfo: AirInfoType) {
               >
                 <span className="w-8 fill-white"> {iconsBundle[title]}</span>
                 <span className="flex flex-col">
-                  <p className="text-gray-300">{title}</p>
+                  <p className="text-gray-300">{title.replace("_"," ")}</p>
                   <p>{element ? formattedInfo(title, element) : "???"}</p>
                 </span>
               </div>

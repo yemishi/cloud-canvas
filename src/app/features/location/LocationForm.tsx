@@ -3,11 +3,13 @@ import { LoadingPage } from "@/app/pages";
 import { navigate } from "@/app/redirect";
 import { useState } from "react";
 import { getLocationName } from "./actions";
+import { usePathname } from "next/navigation";
 
 export default function LocationForm() {
   const [location, setLocation] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const pathname = usePathname();
 
   const getLocation = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -62,7 +64,13 @@ export default function LocationForm() {
       </span>
       <button
         type="submit"
-        onClick={() => location && setLoading(true)}
+        onClick={() =>
+          !pathname
+            .toLocaleLowerCase()
+            .includes(`/${location.toLocaleLowerCase()}`) &&
+          location &&
+          setLoading(true)
+        }
         className={`text-lg duration-200 ${location ? "text-green-500" : ""}`}
       >
         See weather

@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Montserrat,
-  Anton,
-  Merriweather,
-  Poppins
-} from "next/font/google";
+import { Montserrat, Anton, Merriweather, Poppins } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -32,7 +27,7 @@ const merriWeather = Merriweather({
 export const metadata: Metadata = {
   title: "Relia cast",
   description: "check the current weather",
-  icons:"./icons/02d.svg"
+  icons: "./icons/02d.svg"
 };
 
 export default function RootLayout({
@@ -45,8 +40,6 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${montserrat.variable} ${anton.variable} ${merriWeather.variable} `}
     >
-
-      
       <body className="overflow-x-hidden w-full min-h-full bg-gradient-radial from-sky-300 to-sky-600 ">
         <main className="w-full h-full">{children}</main>
       </body>
