@@ -45,17 +45,15 @@ export default function LocationForm({ title, ...props }: PropsType) {
         }
       />
 
-    
       {error && (
         <span className="text-red-400 font-merriWeather font-semibold">
           {message}
         </span>
       )}
-        <div className="flex flex-col gap-4">
-
+      <div className="flex flex-col gap-4 items-center">
         <span>or</span>
-      <GetLocation setResponse={setResponse} />
-        </div>
+        <GetLocation setResponse={setResponse} />
+      </div>
       <button
         type="submit"
         className={`text-lg duration-200 ${location ? "underline underline-offset-4" : "pointer-events-none opacity-50"}`}

@@ -4,14 +4,17 @@ const parseToCelsius = (temp: number) => {
 };
 
 const parseLocalTime = (value: number): string => {
-  const currentTime = new Date(value * 1000);
-  return `${currentTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  })}
-    ${Number(currentTime.getHours()) > 12 ? "PM" : "AM"}`;
+  const currentTime = new Date(value);
+
+  const hours = currentTime.getHours();
+  const minutes = currentTime.getMinutes();
+
+  const period = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 || "00";
+
+  const formattedTime = `${formattedHours}:${String(minutes).padStart(2, "0")}`;
+
+  return `${formattedTime} ${period}`;
 };
 
 const formattedInfo = (element: string, value: number, timezone: number) => {

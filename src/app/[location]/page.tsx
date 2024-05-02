@@ -102,9 +102,8 @@ export default async function Page({
     country,
     humidity,
     icon,
-    currTime: parseLocalTime(dt + timezone)
+    currTime: parseLocalTime(dt * 1000+ (timezone * 1000))
   };
-
   return (
     <div
       style={{

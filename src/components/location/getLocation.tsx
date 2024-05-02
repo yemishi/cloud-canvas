@@ -41,7 +41,12 @@ export default function GetLocation({
       const { latitude, longitude } = position.coords;
 
       const response = await fetchLocation(latitude, longitude);
-      setResponse(response), setIsLoading(false);
+      setResponse({
+        error: !!response.error,
+        location: response.location || "",
+        message: response.message || ""
+      }),
+        setIsLoading(false);
     });
   };
   const defaultBg = className?.includes("bg-")

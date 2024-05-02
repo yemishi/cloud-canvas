@@ -47,7 +47,7 @@ export default async function AirInfoMob({ airInfo }: PropsType) {
                 className="flex gap-1 items-center font-lato text-sm"
               >
                 <span className="w-8">
-                  <Icon className="w-full h-full" />
+                  <Icon className="w-full h-full" strokeWidth="0.5"   />
                 </span>
                 <span className="flex flex-col">
                   <span className="text-base font-semibold">

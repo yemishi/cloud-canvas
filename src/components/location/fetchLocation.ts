@@ -4,12 +4,13 @@ export const fetchLocation = async (lat: number, lon: number) => {
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`
     );
     const data = await response.json();
-    if (data)
+    if (data) {
       return {
         error: false,
-        location: data.address.hamlet
+        location:
+          data.address.hamlet || data.address.town || data.address.county
       };
-    else
+    } else
       return {
         error: true,
         message: "Unknown location."
