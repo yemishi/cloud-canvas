@@ -7,6 +7,7 @@ Mobile
  <div style="display:flex;flex-wrap: wrap;gap:2px">
   <img src="public/screenshots/mob-1.png" alt="firest screenshot" width="300" />
   <img src="public/screenshots/mob-2.png" alt="second screenshot" width="300" />
+  <img src="public/screenshots/mob-3.png" alt="second screenshot" width="300" />
  </div>
 
 
