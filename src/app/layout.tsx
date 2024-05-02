@@ -25,7 +25,7 @@ const merriWeather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "Relia cast",
+  title: "Cloud canvas",
   description: "check the current weather",
   icons: "./icons/02d.svg"
 };
@@ -38,10 +38,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${montserrat.variable} ${anton.variable} ${merriWeather.variable} `}
+      className={`h-full w-full overflow-hidden ${poppins.variable} ${montserrat.variable} ${anton.variable} ${merriWeather.variable} `}
     >
-      <body className="overflow-x-hidden w-full min-h-full bg-gradient-radial from-sky-300 to-sky-600 ">
-        <main className="w-full h-full">{children}</main>
+      <body
+        className={`overflow-x-hidden bg-no-repeat bg-cover bg-[url(/backgrounds/homeBg.jpg)]`}
+      >
+        {children}
       </body>
     </html>
   );

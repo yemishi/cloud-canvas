@@ -1,5 +1,6 @@
 "use server";
-import { LocationForm } from "@/app/features";
+
+import LocationForm from "@/components/location/LocationForm";
 
 export default async function NotFoundLocation() {
   return (
@@ -7,10 +8,7 @@ export default async function NotFoundLocation() {
       <h1 className="font-merriWeather font-bold text-xl text-red-400">
         Location not found
       </h1>
-      <div className="bg-gray-300 bg-opacity-50 flex flex-col items-center p-7 rounded-lg text-center gap-7">
-        <p className="font-montserrat font-bold text-xl">Try another</p>
-        <LocationForm />
-      </div>
+      <LocationForm className="bg-zinc-900" title="Try another place" />
     </div>
   );
 }
