@@ -18,6 +18,6 @@ export default function LocationPage({ weatherInfo }: { weatherInfo: WeatherInfo
             window.removeEventListener("resize", handleSizeChange);
         };
     }, []);
-    return  <MobViewPage {...weatherInfo} />
+
     return isMobile ? <MobViewPage {...weatherInfo} /> : <DeskViewPage {...weatherInfo} />
 }
