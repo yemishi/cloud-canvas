@@ -23,51 +23,77 @@ export default function MultiInfo({ infoProps }: PropsType) {
   );
 
   useEffect(() => {
-    const savePreferences = localStorage.getItem("multiInfo");
-
-    if (savePreferences && JSON.parse(savePreferences)) {
-      const preferences = JSON.parse(savePreferences);
-      const keysCheck = "clouds hPa pressure sunrise sunset timezone";
-
-      const keys = Object.keys(preferences);
-      const check = keys.map((e) => {
-        if (keysCheck.includes(e)) return true;
-      });
-      if (check.filter((e) => e === undefined).length > 0) return;
-      setInfo(info.savedPreferences(preferences));
+    const savedInfo = MultiInfoModel.loadPreferences();
+    if (savedInfo) {
+      setInfo(savedInfo);
+    } else {
+      setInfo(new MultiInfoModel(infoProps)); 
     }
-  }, []);
-
-  if (!info) return <div>error</div>;
+  }, [infoProps]);
 
   const publicProperties: MultiInfoProps = info.getPublicProperties();
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex flex-wrap justify-center gap-5 w-full lg:text-2xl">
+      <motion.div
+        className="flex flex-wrap justify-center gap-5 w-full lg:text-2xl"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.2 },
+          },
+          
+        }}
+      >
         {publicProperties &&
           Object.entries(publicProperties).map(([title, obj], index) => {
             const { value, enable } = obj;
             return (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: `0.${index + 5}` }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: "0 10px 20px rgba(0, 0, 0, 0.15)",
+                  transition: { duration: 0.3}
+                }}
+                transition={{ duration: 0.4 + index * 0.1, ease: "easeOut" }}
+                
                 key={title}
                 className={`${
                   !enable && "hidden"
-                } bg-white text-black border-white border border-opacity-50
+                } bg-white text-black cursor-default border-white border border-opacity-50
                  backdrop-blur-sm bg-opacity-50 font-poppins w-[150px] lg:w-[230px] lg:py-7 p-4 rounded-xl`}
               >
-                <p className="first-letter:uppercase">{title}</p>
-                <p className="font-semibold">
+                <motion.p
+                  className="first-letter:uppercase"
+                  animate={{ x: [-2, 2, -2] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {title}
+                </motion.p>
+                <motion.p
+                  className="font-semibold"
+                  animate={{ opacity: [0.8, 1, 0.8] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
                   {formattedInfo(title, value, info.timezone.value)}
-                </p>
+                </motion.p>
               </motion.div>
             );
           })}
-      </div>
+      </motion.div>
 
       <DivToggle
         className="backdrop-blur-sm lg:hidden"
@@ -75,8 +101,9 @@ export default function MultiInfo({ infoProps }: PropsType) {
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="p-1 w-full h-full cursor-pointer hover:rotate-180 duration-200"
+            whileHover={{ rotate: 180, scale: 1.2 }}
+            transition={{ duration: 0.3 }}
+            className="p-1 w-full h-full cursor-pointer"
           >
             <FaPencilAlt className="w-full h-full" />
           </motion.span>

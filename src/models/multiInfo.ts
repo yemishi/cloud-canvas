@@ -1,133 +1,58 @@
 import { MultiInfoProps } from "@/types";
 
 export default class MultiInfoModel {
-  #clouds: { value: number; enable: boolean };
-  #pressure: { value: number; enable: boolean };
-  #timezone: { value: number; enable: boolean };
-  #sunrise: { value: number; enable: boolean };
-  #sunset: { value: number; enable: boolean };
+  #properties: {
+    clouds: { value: number; enable: boolean };
+    pressure: { value: number; enable: boolean };
+    timezone: { value: number; enable: boolean };
+    sunrise: { value: number; enable: boolean };
+    sunset: { value: number; enable: boolean };
+  };
 
   constructor(infoProps: MultiInfoProps) {
-    const { clouds, timezone, pressure, sunrise, sunset } = infoProps;
-
-    this.#clouds = clouds;
-    this.#timezone = timezone;
-    this.#pressure = pressure;
-    this.#sunrise = sunrise;
-    this.#sunset = sunset;
+    this.#properties = { ...infoProps };
   }
   get clouds() {
-    return this.#clouds;
+    return this.#properties.clouds;
   }
   get pressure() {
-    return this.#pressure;
+    return this.#properties.pressure;
   }
   get timezone() {
-    return this.#timezone;
+    return this.#properties.timezone;
   }
   get sunrise() {
-    return this.#sunrise;
+    return this.#properties.sunrise;
   }
   get sunset() {
-    return this.#sunset;
+    return this.#properties.sunset;
   }
 
   getPublicProperties() {
-    return {
-      clouds: this.#clouds,
-      timezone: this.#timezone,
-      pressure: this.#pressure,
-      sunrise: this.#sunrise,
-      sunset: this.#sunset
-    };
-  }
-
-  private createUpdatedValues(property: string): MultiInfoProps {
-    switch (property) {
-      case "clouds":
-        return {
-          clouds: { value: this.clouds.value, enable: !this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: this.sunset.enable }
-        };
-      case "timezone":
-        return {
-          clouds: { value: this.clouds.value, enable: this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: !this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: this.sunset.enable }
-        };
-      case "pressure":
-        return {
-          clouds: { value: this.clouds.value, enable: this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: !this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: this.sunset.enable }
-        };
-      case "sunrise":
-        return {
-          clouds: { value: this.clouds.value, enable: this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: !this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: this.sunset.enable }
-        };
-      case "sunset":
-        return {
-          clouds: { value: this.clouds.value, enable: this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: !this.sunset.enable }
-        };
-      default:
-        return {
-          clouds: { value: this.clouds.value, enable: this.clouds.enable },
-          timezone: { value: this.timezone.value, enable: this.timezone.enable },
-          pressure: {
-            value: this.pressure.value,
-            enable: this.pressure.enable
-          },
-          sunrise: { value: this.sunrise.value, enable: this.sunrise.enable },
-          sunset: { value: this.sunset.value, enable: this.sunset.enable }
-        };
-    }
+    return this.#properties
   }
 
   toggleEnable(property: "clouds" | "pressure" | "timezone" | "sunrise" | "sunset") {
-    const newInfoProps = this.createUpdatedValues(property);
-    const newProps = new MultiInfoModel(newInfoProps);
-    return newProps;
+    const updatedProperties = { ...this.#properties };
+    updatedProperties[property].enable = !updatedProperties[property].enable;
+    return new MultiInfoModel(updatedProperties);
+  }
+  savePreferences() {
+    const preferences = this.getPublicProperties();
+    localStorage.setItem("multiInfo", JSON.stringify(preferences));
   }
 
-  savedPreferences(infoProps: MultiInfoProps) {
-    const { clouds, timezone, pressure, sunrise, sunset } = infoProps;
-    const newInfoProps = {
-      clouds: { value: this.clouds.value, enable: clouds.enable },
-      timezone: { value: this.timezone.value, enable: timezone.enable },
-      pressure: { value: this.pressure.value, enable: pressure.enable },
-      sunrise: { value: this.sunrise.value, enable: sunrise.enable },
-      sunset: { value: this.sunset.value, enable: sunset.enable }
-    };
-    return new MultiInfoModel(newInfoProps);
+  static loadPreferences() {
+    const savedPreferences = localStorage.getItem("multiInfo");
+    if (savedPreferences) {
+      const preferences: MultiInfoProps = JSON.parse(savedPreferences);
+      return new MultiInfoModel(preferences);
+    }
+    return null; 
   }
+
+  static arePreferencesSaved() {
+    return !!localStorage.getItem("multiInfo");
+  }
+
 }

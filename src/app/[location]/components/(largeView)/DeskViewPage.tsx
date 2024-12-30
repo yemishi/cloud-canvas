@@ -25,13 +25,13 @@ export default function DeskViewPage({
     error?: boolean;
     location?: string;
   }>({
-    message: "aaaa",
+    message: "",
     error: false,
     location: ""
   });
   const { push } = useRouter();
   return (
-    <div className="hidden lg:flex w-full  min-h-full bg-black bg-opacity-40 gap-16 flex-col items-center  px-10 pb-11">
+    <div className="flex w-full min-h-full overflow-auto bg-black bg-opacity-40 gap-16 flex-col items-center  px-10 pb-11">
       <form
         onSubmit={(e) => {
           e.preventDefault(), push(encodeURI(String(location)));

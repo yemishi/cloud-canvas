@@ -50,17 +50,19 @@ export default function PreferencesPanel({
       >
         {Object.entries(publicProperties).map(([title, obj]) => {
           const { enable } = obj;
-          const toggle = () =>
+          const toggle = () => {
             setState(
               state.toggleEnable(
                 title as
-                  | "clouds"
-                  | "pressure"
-                  | "timezone"
-                  | "sunrise"
-                  | "sunset"
+                | "clouds"
+                | "pressure"
+                | "timezone"
+                | "sunrise"
+                | "sunset"
               )
-            );
+            )
+            state.savePreferences()
+          }
 
           return (
             <div key={title} className="flex gap-8 items-center">
@@ -69,10 +71,9 @@ export default function PreferencesPanel({
                 onClick={toggle}
                 className={`border w-16 h-9 rounded-full ml-auto  cursor-pointer relative duration-300 after:duration-300 after:absolute 
                 after:h-6 after:top-1/2 after:-translate-y-1/2 after:bg-gray-200
-                  after:w-6 after:ml-1 after:rounded-full ${
-                    enable
-                      ? "bg-[#f1aa14] after:left-0"
-                      : "bg-gray-400 after:left-[calc(4rem_-_1.75rem_-_4px)]"
+                  after:w-6 after:ml-1 after:rounded-full ${enable
+                    ? "bg-[#f1aa14] after:left-0"
+                    : "bg-gray-400 after:left-[calc(4rem_-_1.75rem_-_4px)]"
                   }`}
               />
             </div>

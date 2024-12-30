@@ -3,8 +3,7 @@
 import { WeatherIcon, WeatherInfoType } from "@/types";
 import { parseLocalTime, parseToCelsius } from "@/utils/index";
 import NotFoundLocation from "@/components/ui/NotFoundLocation";
-import DeskViewPage from "./(largeView)/DeskViewPage";
-import MobViewPage from "./(smallView)/MobViewPage";
+import LocationPage from "./components/LocationPage";
 
 type WeatherType = {
   name: string;
@@ -55,7 +54,6 @@ export default async function Page({
   params: { location: string };
 }) {
   const data = await getData(location);
-
   if (data.cod !== 200) return <NotFoundLocation />;
   const { main, name, weather, wind, sys, dt, clouds, timezone } = data;
 
@@ -102,17 +100,16 @@ export default async function Page({
     country,
     humidity,
     icon,
-    currTime: parseLocalTime(dt * 1000+ (timezone * 1000))
+    currTime: parseLocalTime(dt * 1000 + (timezone * 1000))
   };
   return (
     <div
       style={{
         background: `url(./backgrounds/${icon}.jpg)`
       }}
-      className={`!bg-cover !bg-center !bg-no-repeat min-h-full flex`}
+      className={`!bg-cover overflow-auto !bg-center h-full !bg-no-repeat flex`}
     >
-      <MobViewPage {...weatherInfo} />
-      <DeskViewPage {...weatherInfo} />
+      <LocationPage weatherInfo={weatherInfo} />
     </div>
   );
 }
